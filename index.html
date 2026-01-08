@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eswari Ramesh - Dashboard Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body { display: flex; min-height: 100vh; background: #f0f2f5; color: #333; }
+    
+    /* Sidebar */
+    .sidebar {
+        width: 250px;
+        background: #1e272e;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+    }
+    .sidebar h2 { margin-bottom: 40px; font-size: 1.8em; color: #00a8ff; }
+    .sidebar a {
+        color: #dcdde1;
+        text-decoration: none;
+        margin: 15px 0;
+        display: block;
+        font-weight: 500;
+    }
+    .sidebar a:hover { color: #00a8ff; }
+
+    /* Main content */
+    .main {
+        flex: 1;
+        padding: 30px;
+        overflow-y: auto;
+    }
+    h1, h2 { color: #2f3640; }
+    h1 { font-size: 2em; margin-bottom: 20px; }
+    section { margin-bottom: 40px; }
+
+    /* Cards */
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+    .card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        transition: transform 0.2s;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card h3 { margin-bottom: 10px; color: #40739e; }
+    .card p { font-size: 0.95em; line-height: 1.4; }
+
+    /* Skills tags */
+    .skills { display: flex; flex-wrap: wrap; margin-top: 10px; }
+    .skills span {
+        background: #00a8ff;
+        color: #fff;
+        padding: 6px 12px;
+        margin: 5px;
+        border-radius: 20px;
+        font-size: 0.85em;
+    }
+
+    /* Footer */
+    footer { text-align: center; padding: 20px; color: #555; font-size: 0.9em; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        body { flex-direction: column; }
+        .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+        .sidebar a { margin: 0 15px; }
+        .main { padding: 20px 10px; }
+        .cards { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Eswari R.</h2>
+    <a href="#about">About Me</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+</div>
+
+<div class="main">
+    <h1>Dashboard Portfolio</h1>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Software Developer with 5+ years of experience delivering secure, scalable applications across ERP, POS, and CRM platforms. Skilled in C#, .NET, SQL Server, and RESTful API development. Experienced in high-performance reporting engines, database optimization, and real-time analytics. Collaborative team player with Agile experience, delivering reliable and maintainable solutions.</p>
+    </section>
+
+    <section id="experience">
+        <h2>Experience</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Nirvana Intelligent System</h3>
+                <p><strong>Software Developer</strong> | Sept 2021 – Present | Bolton, UK</p>
+                <ul>
+                    <li>Custom Excel export engine for 200,000+ records.</li>
+                    <li>Multi-level reporting framework with grouping and totalling.</li>
+                    <li>Sales & POS API development for automated operations.</li>
+                    <li>Low-latency analytics APIs via Azure.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Evolve Education</h3>
+                <p><strong>Intern</strong> | Oct 2020 – Mar 2021 | UK</p>
+                <ul>
+                    <li>Enhanced Laravel web platform for well-being analytics.</li>
+                    <li>Improved user data entry process and usability.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Aarovin Technology</h3>
+                <p><strong>Software Engineer</strong> | Jun 2017 – Dec 2019 | Trichy, India</p>
+                <ul>
+                    <li>Developed outpatient reporting modules for healthcare.</li>
+                    <li>ERP/CRM module development using ASP.NET & C#.</li>
+                    <li>Created interactive dashboards and analytics tools.</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Roever College of Engineering</h3>
+                <p><strong>Lecturer</strong> | Jul 2012 – Jun 2017 | Tamil Nadu, India</p>
+                <ul>
+                    <li>Taught OOP and Web Technologies to 100+ students.</li>
+                    <li>Published IEEE papers in AI & Data Mining.</li>
+                    <li>Mentored 50+ student projects.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <h2>Education</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Coventry University</h3>
+                <p>MSc International Project Management | Jan 2020 – Aug 2021 | London</p>
+            </div>
+            <div class="card">
+                <h3>Periyar Maniammai University</h3>
+                <p>M.E. Computer Science & Engineering | Aug 2010 – May 2012 | India</p>
+            </div>
+            <div class="card">
+                <h3>Anna University</h3>
+                <p>B.E. Computer Science & Engineering | Aug 2003 – May 2007 | India</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills">
+            <span>C#</span><span>VB.NET</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>SQL</span>
+            <span>SQL Server</span><span>MySQL</span><span>PostgreSQL</span><span>Visual Studio</span>
+            <span>LibXL</span><span>DevExpress</span><span>Crystal Reports</span><span>Azure DevOps</span>
+            <span>CI/CD</span><span>Azure</span><span>REST API</span><span>Agile</span><span>Microservices</span>
+            <span>ASP.NET Core</span><span>MVC</span><span>Web API</span><span>Angular</span><span>Entity Framework</span>
+            <span>Dapper</span>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Portfolio Highlights</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>Custom Excel Export Engine</h3>
+                <ul>
+                    <li>Processed 200,000+ records efficiently.</li>
+                    <li>Solved enterprise-level data scalability issues.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Multi-Level Reporting Framework</h3>
+                <ul>
+                    <li>Scalable reporting engine with grouping and totalling.</li>
+                    <li>Outperformed third-party tools in control & performance.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Sales & POS API Development</h3>
+                <ul>
+                    <li>Automated import/export services for faster reporting.</li>
+                    <li>Real-time Stock, Sales, and Product lifecycle APIs.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Real-Time Analytics via Azure</h3>
+                <ul>
+                    <li>Low-latency reporting APIs for instant insights.</li>
+                    <li>Secure cloud-hosted services for management decisions.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:er.eswariramesh@gmail.com">er.eswariramesh@gmail.com</a></p>
+        <p>Phone: +44 7438 767905</p>
+        <p>Location: Bolton, United Kingdom</p>
+    </section>
+
+    <footer>
+        &copy; 2026 Eswari Ramesh | Designed as a Dashboard Portfolio
+    </footer>
+</div>
+
+</body>
+</html>
