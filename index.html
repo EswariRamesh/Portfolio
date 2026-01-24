@@ -7,16 +7,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-    body { display: flex; min-height: 100vh; background: #f0f2f5; color: #333; }
-    
+
+    /* Body and background */
+    body { 
+        display: flex; 
+        min-height: 100vh; 
+        background: #0a0a0a; /* fallback if canvas fails */
+        color: #fff; 
+        position: relative;
+    }
+
     /* Sidebar */
     .sidebar {
         width: 250px;
-        background: #1e272e;
+        background: rgba(30,39,46,0.95);
         color: #fff;
         display: flex;
         flex-direction: column;
         padding: 20px;
+        z-index: 2;
+        position: relative;
     }
     .sidebar h2 { margin-bottom: 40px; font-size: 1.8em; color: #00a8ff; }
     .sidebar a {
@@ -33,23 +43,25 @@
         flex: 1;
         padding: 30px;
         overflow-y: auto;
+        z-index: 2;
+        position: relative;
     }
-    h1, h2 { color: #2f3640; }
+    h1, h2 { color: #f5f6fa; }
     h1 { font-size: 2em; margin-bottom: 20px; }
     section { margin-bottom: 40px; }
 
     /* Cards */
     .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
     .card {
-        background: #fff;
+        background: rgba(255,255,255,0.05);
         padding: 20px;
         border-radius: 12px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-        transition: transform 0.2s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: transform 0.2s, background 0.3s;
     }
-    .card:hover { transform: translateY(-5px); }
-    .card h3 { margin-bottom: 10px; color: #40739e; }
-    .card p { font-size: 0.95em; line-height: 1.4; }
+    .card:hover { transform: translateY(-5px); background: rgba(0,168,255,0.1); }
+    .card h3 { margin-bottom: 10px; color: #00a8ff; }
+    .card p, .card li { font-size: 0.95em; line-height: 1.4; color: #dcdde1; }
 
     /* Skills tags */
     .skills { display: flex; flex-wrap: wrap; margin-top: 10px; }
@@ -63,7 +75,7 @@
     }
 
     /* Footer */
-    footer { text-align: center; padding: 20px; color: #555; font-size: 0.9em; }
+    footer { text-align: center; padding: 20px; color: #aaa; font-size: 0.9em; }
 
     /* Responsive */
     @media (max-width: 768px) {
@@ -73,9 +85,23 @@
         .main { padding: 20px 10px; }
         .cards { grid-template-columns: 1fr; }
     }
+
+    /* Canvas for particles */
+    #particle-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+        background: #0a0a0a;
+    }
 </style>
 </head>
 <body>
+
+<canvas id="particle-canvas"></canvas>
 
 <div class="sidebar">
     <h2>Eswari Ramesh</h2>
@@ -88,8 +114,6 @@
 </div>
 
 <div class="main">
-    
-
     <section id="about">
         <h2>About Me</h2>
         <p>Software Developer with 5+ years of experience delivering secure, scalable applications across ERP, POS, and CRM platforms. Skilled in C#, .NET, SQL Server, and RESTful API development. Experienced in high-performance reporting engines, database optimization, and real-time analytics. Collaborative team player with Agile experience, delivering reliable and maintainable solutions.</p>
@@ -211,13 +235,70 @@
         <p>Location: Bolton, United Kingdom</p>
     </section>
 
-    <footer>
-         
-    </footer>
+    <footer></footer>
 </div>
+
+<!-- Particle JS -->
+<script>
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+const particles = [];
+const particleCount = 120;
+
+for (let i = 0; i < particleCount; i++) {
+    particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 2 + 1
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = '#00a8ff';
+    particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+    });
+
+    // Connect lines
+    for (let i = 0; i < particleCount; i++) {
+        for (let j = i + 1; j < particleCount; j++) {
+            let dx = particles[i].x - particles[j].x;
+            let dy = particles[i].y - particles[j].y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 100) {
+                ctx.strokeStyle = 'rgba(0, 168, 255, 0.2)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+            }
+        }
+    }
+
+    requestAnimationFrame(draw);
+}
+
+draw();
+
+window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+});
+</script>
 
 </body>
 </html>
-
-
-
