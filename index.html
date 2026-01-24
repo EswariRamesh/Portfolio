@@ -16,7 +16,20 @@
         background: #0a0a0a; 
         color: #fff; 
         position: relative;
-        font-family: 'Fira Code', monospace; /* Default body font */
+        font-family: 'Fira Code', monospace; /* default body font */
+        overflow-x: hidden;
+    }
+
+    /* Canvas for particles */
+    #particle-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0; /* behind content */
+        pointer-events: none;
+        background: #0a0a0a;
     }
 
     /* Sidebar */
@@ -27,9 +40,9 @@
         display: flex;
         flex-direction: column;
         padding: 20px;
-        z-index: 2;
+        z-index: 1; /* above canvas */
         position: relative;
-        font-family: 'Poppins', sans-serif; /* Sidebar headings & links */
+        font-family: 'Poppins', sans-serif; /* headings/sidebar font */
     }
     .sidebar h2 { 
         margin-bottom: 40px; 
@@ -51,7 +64,7 @@
         flex: 1;
         padding: 30px;
         overflow-y: auto;
-        z-index: 2;
+        z-index: 1; /* above canvas */
         position: relative;
     }
     h1, h2 { 
@@ -70,7 +83,7 @@
         border-radius: 12px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         transition: transform 0.2s, background 0.3s;
-        font-family: 'Fira Code', monospace; /* Code/project style font */
+        font-family: 'Fira Code', monospace; /* code/project font */
     }
     .card:hover { transform: translateY(-5px); background: rgba(0,168,255,0.1); }
     .card h3 { margin-bottom: 10px; color: #00a8ff; font-weight: 600; }
@@ -98,18 +111,6 @@
         .sidebar a { margin: 0 15px; }
         .main { padding: 20px 10px; }
         .cards { grid-template-columns: 1fr; }
-    }
-
-    /* Canvas for particles */
-    #particle-canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-        pointer-events: none;
-        background: #0a0a0a;
     }
 </style>
 </head>
@@ -236,3 +237,85 @@
                 <h3>Real-Time Analytics via Azure</h3>
                 <ul>
                     <li>Low-latency reporting APIs for instant insights.</li>
+                    <li>Secure cloud-hosted services for management decisions.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:er.eswariramesh@gmail.com">er.eswariramesh@gmail.com</a></p>
+        <p>Phone: +44 7438 767905</p>
+        <p>Location: Bolton, United Kingdom</p>
+    </section>
+
+    <footer></footer>
+</div>
+
+<!-- Particle JS -->
+<script>
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+const particles = [];
+const particleCount = 120;
+
+// Initialize particles
+for (let i = 0; i < particleCount; i++) {
+    particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 2 + 1
+    });
+}
+
+function draw() {
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = '#00a8ff';
+    particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+    });
+
+    // Draw lines
+    for (let i = 0; i < particleCount; i++) {
+        for (let j = i + 1; j < particleCount; j++) {
+            let dx = particles[i].x - particles[j].x;
+            let dy = particles[i].y - particles[j].y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 100) {
+                ctx.strokeStyle = 'rgba(0, 168, 255, 0.2)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+            }
+        }
+    }
+
+    requestAnimationFrame(draw);
+}
+
+draw();
+
+window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
